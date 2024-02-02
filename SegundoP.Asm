@@ -27,7 +27,7 @@ lblJugador1 equ 1101
 lblJugador2 equ 1102
 lblRondas equ 1103
 etPuntos1 equ 3101
-etPuntos1 equ 3102
+etPuntos2 equ 3102
 btnSiguiente equ 2101
 ;----------------------------
 
