@@ -1,1 +1,3 @@
+#include "Res/VentanaPuntosDlg.rc"
+#include "Res/DatosPDlg.rc"
 #include <Res\SegundoPDlg.rc>

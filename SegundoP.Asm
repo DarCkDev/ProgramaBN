@@ -12,11 +12,24 @@ btnIniciar equ 2002
 etJugador1 equ 3001
 etJugador2 equ 3002
 etRondas equ 3003
+lblDescripcion equ 1002
 
 maxCar equ 20
 jugador1 db maxCar dup(' '),0
 jugador2 db maxCar dup(' '),0
+contador dd 1
 rondas dd 0
+puntos1 dd 0
+puntos2 dd 0
+
+;-------------------Pantalla2
+lblJugador1 equ 1101
+lblJugador2 equ 1102
+lblRondas equ 1103
+etPuntos1 equ 3101
+etPuntos1 equ 3102
+btnSiguiente equ 2101
+;----------------------------
 
 msjErrorJugador db "Debe ingresar un nombre de Jugador",0
 msjErrorRondas db "Debe ingresar un número válido entre 1 y 9.",0
@@ -59,21 +72,30 @@ jCOMMAND:
 	je aBtnRegistrar
 	cmp eax,btnIniciar
 	je aBtnIniciar
+	cmp eax,btnSiguiente
+	je aBtnSiguiente
 	xor eax,eax
 	jmp finish
 
+aBtnSiguiente:
+	invoke MessageBox,[hWnd],jugador1,jugador2,MB_OK
+	mov eax,1
+	jmp finish
+	
 aBtnRegistrar:
 	invoke SendDlgItemMessage,[gWnd],etJugador1,WM_GETTEXT,maxCar,jugador1
 	invoke SendDlgItemMessage,[gWnd],etJugador2,WM_GETTEXT,maxCar,jugador2
-	invoke GetDlgItemInt,[gWnd],etRondas,rondas,0
-	;invoke MessageBox,[gWnd],jugador1,jugador2,MB_OK
+	invoke GetDlgItemInt,[gWnd],etRondas,0,0
+	mov [rondas],eax
 	
 	mov eax,1
 	jmp finish
 
 aBtnIniciar:
-	invoke MessageBox,[gWnd],jugador1,jugador2,MB_OK
-	
+	invoke CreateDialogParam,[gIst],2,0,DlgProc,0
+	invoke SendDlgItemMessage,[gWnd],lblJugador1,WM_SETTEXT,0,jugador1
+	invoke SendDlgItemMessage,[gWnd],lblJugador2,WM_SETTEXT,0,jugador2
+	invoke SetDlgItemInt,[gWnd],lblRondas,[contador],0
 	mov eax,1
 	jmp finish
 	
@@ -91,17 +113,11 @@ finish:
 	ret
 endp
 
-;mostrarErrorJugador:
-;	invoke MessageBox,[gWnd],msjErrorJugador,msjError,MB_OK
-	
-;	mov eax,1
-;	jmp finish
-	
-;mostrarErrorRondas:
-;	invoke MessageBox,[gWnd],msjErrorRondas,msjError,MB_OK
-;	mov eax,1
-;	jmp finish
-
+;invoke CreateDialogParam,[gIst],2,0,DlgProc,0
+;invoke MessageBox,[hWnd],jugador1,jugador2,MB_OK
+;invoke GetDlgItem,[hWnd],lblRondaActual
+;mov ebx,eax
+;invoke ShowWindow,ebx,SW_HIDE
 section '.idata' import data readable writeable
 
   library kernel, 'KERNEL32.DLL',\
@@ -115,6 +131,10 @@ section '.idata' import data readable writeable
 	  DialogBoxParam, 'DialogBoxParamA',\
 	  EndDialog,	  'EndDialog',\
 	  GetDlgItemInt, 'GetDlgItemInt',\
+	  GetDlgItem, 'GetDlgItem',\
+	  SetDlgItemInt, 'SetDlgItemInt',\
+	  CreateDialogParam, 'CreateDialogParamA',\
+	  ShowWindow, 'ShowWindow',\
 	  SendDlgItemMessage, 'SendDlgItemMessageA',\
 	  MessageBox, 'MessageBoxA',\
 	  SendMessage,	  'SendMessageA'
