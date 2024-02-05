@@ -18,7 +18,7 @@ BEGIN
   CONTROL "Jugador",IDC_STC6,"Static",0x50000000,13,61,64,13,0x00000000
   CONTROL "0",IDC_STC10,"Static",0x50000000,133,72,20,13,0x00000000
   CONTROL "Ronda:",IDC_STC11,"Static",0x50000000,106,72,24,13,0x00000000
-  CONTROL "Puntajes de los lanzamientos",IDC_STC13,"Static",0x50000000,82,9,90,13,0x00000000
+  CONTROL "Puntajes de los lanzamientos. \n\nIngrese los puntos entre 0 y 9 y después presione el botón 'Siguiente'.",IDC_STC13,"Static",0x50000001,54,9,144,35,0x00000000
   CONTROL "Jugador",IDC_STC14,"Static",0x50000000,166,61,64,13,0x00000000
   CONTROL "0",IDC_EDT6,"Edit",0x50010000,166,76,80,13,0x00000000
 END
